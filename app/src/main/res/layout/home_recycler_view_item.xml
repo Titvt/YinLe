@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.titvt.yinle.viewmodel.MainViewModel" />
+
+        <variable
+            name="albumInfo"
+            type="com.titvt.yinle.bean.AlbumInfo" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:onClick="@{()->viewModel.viewAlbum(albumInfo.id)}"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/cover"
+            android:layout_width="156.5dp"
+            android:layout_height="156.5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14.5dp"
+            android:maxWidth="156.5dp"
+            android:maxLines="1"
+            android:text="@{albumInfo.name}"
+            android:textColor="@color/blackText"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="26dp"
+            android:maxWidth="156.5dp"
+            android:maxLines="1"
+            android:text="@{albumInfo.nickname}"
+            android:textColor="@color/blueBackground"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</layout>

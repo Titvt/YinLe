@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.titvt.yinle.viewmodel.MainViewModel" />
+
+        <variable
+            name="songInfo"
+            type="com.titvt.yinle.bean.SongInfo" />
+
+        <variable
+            name="index"
+            type="int" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:onClick="@{()->viewModel.playAlbumSong(songInfo.id)}"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="53.5dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25.5dp"
+                android:text="@{String.valueOf(index)}"
+                android:textColor="@{viewModel.getItemSubColor(songInfo.id)}"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18.5dp"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:text="@{songInfo.name}"
+                android:textColor="@{viewModel.getItemColor(songInfo.id)}"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24.5dp"
+                android:layout_marginEnd="24.5dp"
+                android:text="@{viewModel.getFormatTime(songInfo.dt)}"
+                android:textColor="@{viewModel.getItemSubColor(songInfo.id)}"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/greyBorder" />
+
+    </LinearLayout>
+
+</layout>

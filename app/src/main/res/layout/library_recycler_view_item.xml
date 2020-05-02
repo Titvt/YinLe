@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.titvt.yinle.viewmodel.MainViewModel" />
+
+        <variable
+            name="albumInfo"
+            type="com.titvt.yinle.bean.AlbumInfo" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="142dp"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="141.5dp">
+
+            <FrameLayout
+                android:layout_width="95dp"
+                android:layout_height="95dp"
+                android:layout_margin="23.5dp"
+                android:onClick="@{()->viewModel.firstPlayAlbum(albumInfo.id)}">
+
+                <ImageView
+                    android:id="@+id/cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_margin="36dp"
+                    android:src="@mipmap/play" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="@{()->viewModel.viewAlbum(albumInfo.id)}"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20.5dp"
+                    android:maxLines="1"
+                    android:text="@{albumInfo.name}"
+                    android:textColor="@color/blackText"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@{albumInfo.nickname}"
+                    android:textColor="@color/blueBackground"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="23dp"
+                        android:layout_height="21.5dp"
+                        android:src="@mipmap/playlist_grey" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15.5dp"
+                        android:layout_weight="1"
+                        android:text='@{albumInfo.trackCount+" Tracks"}'
+                        android:textColor="@color/greyText"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="23dp"
+                        android:layout_height="5dp"
+                        android:layout_marginStart="15.5dp"
+                        android:layout_marginEnd="23.5dp"
+                        android:src="@mipmap/dots" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/greyBorder" />
+
+    </LinearLayout>
+
+</layout>

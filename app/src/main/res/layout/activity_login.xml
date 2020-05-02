@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.titvt.yinle.viewmodel.LoginViewModel" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/greyBackground"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        tools:context=".view.LoginActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="72dp"
+                android:src="@mipmap/logo" />
+
+            <EditText
+                android:layout_width="230dp"
+                android:layout_height="44dp"
+                android:layout_marginTop="53dp"
+                android:background="@drawable/input_text"
+                android:maxLines="1"
+                android:paddingStart="21.5dp"
+                android:paddingEnd="21.5dp"
+                android:textColor="@color/blackText"
+                android:textSize="19sp" />
+
+            <EditText
+                android:layout_width="230dp"
+                android:layout_height="44dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/input_text"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:paddingStart="21.5dp"
+                android:paddingEnd="21.5dp"
+                android:textColor="@color/blackText"
+                android:textSize="19sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17.5dp"
+                android:text="@string/forgot_your_password"
+                android:textColor="@color/greyText"
+                android:textSize="14sp" />
+
+            <Button
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="180dp"
+                android:layout_height="44dp"
+                android:layout_marginTop="23.5dp"
+                android:layout_marginBottom="36dp"
+                android:background="@drawable/red_button"
+                android:onClick="@{()->viewModel.onClickLogin()}"
+                android:text="@string/login"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24.5dp"
+            android:text="@string/sign_with_a_social_account"
+            android:textColor="@color/greyText"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="260dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="22.5dp"
+            android:background="@drawable/dark_blue_button"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="9dp"
+                android:layout_height="19.5dp"
+                android:src="@mipmap/facebook" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="13.5dp"
+                android:text="@string/login_with_facebook"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="260dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/light_blue_button"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="21.9dp"
+                android:layout_height="17.95dp"
+                android:src="@mipmap/twitter" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11.1dp"
+                android:text="@string/login_with_twitter"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

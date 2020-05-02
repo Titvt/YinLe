@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.titvt.yinle.viewmodel.MainViewModel" />
+
+        <variable
+            name="albumDetail"
+            type="com.titvt.yinle.bean.AlbumDetail" />
+
+        <variable
+            name="songInfo"
+            type="com.titvt.yinle.bean.SongInfo" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        tools:context=".view.AlbumFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="53.5dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="53.5dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:onClick="@{()->viewModel.pageBack()}">
+
+                <ImageView
+                    android:layout_width="9.5dp"
+                    android:layout_height="16dp"
+                    android:src="@mipmap/arrow" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="53.5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/play_list"
+                android:textColor="@color/blackText"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/greyBorder" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="157dp"
+            android:background="@color/greyBackground">
+
+            <ImageView
+                android:id="@+id/cover"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_margin="23.5dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30.5dp"
+                    android:maxLines="1"
+                    android:text="@{albumDetail.albumInfo.name}"
+                    android:textColor="@color/blackText"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@{albumDetail.albumInfo.nickname}"
+                    android:textColor="@color/blueBackground"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="34dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="23dp"
+                        android:layout_height="21.5dp"
+                        android:src="@mipmap/playlist_grey" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15.5dp"
+                        android:layout_weight="1"
+                        android:text='@{albumDetail.albumInfo.trackCount+" Tracks"}'
+                        android:textColor="@color/greyText"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="23dp"
+                        android:layout_height="5dp"
+                        android:layout_marginStart="15.5dp"
+                        android:layout_marginEnd="23.5dp"
+                        android:src="@mipmap/dots" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_weight="1"
+                android:text="@string/songs"
+                android:textColor="@color/blackText"
+                android:textSize="22sp" />
+
+            <LinearLayout
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:gravity="center"
+                android:onClick="@{()->viewModel.reverseShaffle()}">
+
+                <ImageView
+                    android:id="@+id/shaffle"
+                    android:layout_width="23.5dp"
+                    android:layout_height="19dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/greyBorder" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/greyBorder" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="64dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:onClick="@{()->viewModel.switchStatus()}">
+
+                <ImageView
+                    android:id="@+id/play"
+                    android:layout_width="20dp"
+                    android:layout_height="22dp"
+                    android:src="@mipmap/play_blue" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:onClick="@{()->viewModel.enterSong()}"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="280dp"
+                    android:maxLines="1"
+                    android:text="@{songInfo.name}"
+                    android:textColor="@color/blackText"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="280dp"
+                    android:maxLines="1"
+                    android:text="@{songInfo.ar}"
+                    android:textColor="@color/greyText"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="64dp"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="23dp"
+                    android:layout_height="5dp"
+                    android:src="@mipmap/dots" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>
