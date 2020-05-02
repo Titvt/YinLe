@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.titvt.yinle.R;
 import com.titvt.yinle.bean.AlbumInfo;
+import com.titvt.yinle.bean.SongInfo;
 import com.titvt.yinle.databinding.FragmentLibraryBinding;
 import com.titvt.yinle.viewmodel.MainViewModel;
 
@@ -45,6 +46,7 @@ public class LibraryFragment extends Fragment {
             }
         }, getActivity(), getLayoutInflater(), mainViewModel);
         fragmentLibraryBinding.recyclerView.setAdapter(libraryRecyclerViewAdapter);
+        fragmentLibraryBinding.setSongInfo(new SongInfo(0, "音乐（lè），享受白嫖的快感", 0, 0, "", "我再强调一次，第二个字读快乐的乐！"));
         mainViewModel.getAlbumInfos().observe(getActivity(), libraryRecyclerViewAdapter::submitList);
         mainViewModel.getCurrentPlaying().observe(getActivity(), songDetail -> fragmentLibraryBinding.setSongInfo(songDetail.getSongInfo()));
         mainViewModel.getIsPlaying().observe(getActivity(), isPlaying -> fragmentLibraryBinding.play.setImageResource(!isPlaying ? R.mipmap.play_blue : R.mipmap.pause));

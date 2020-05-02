@@ -41,8 +41,10 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.getPageStatus().observe(this, pageStatus -> {
             switch (pageStatus) {
                 case -1:
-                    fragmentManager.beginTransaction().hide(currentFragment).show(previousFragment).commit();
-                    currentFragment = previousFragment;
+                    if (currentFragment == albumFragment || currentFragment == playFragment) {
+                        fragmentManager.beginTransaction().hide(currentFragment).show(previousFragment).commit();
+                        currentFragment = previousFragment;
+                    }
                     break;
                 case 1:
                     switchToAlbum();
@@ -68,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
         if (currentFragment != fragment) {
             if (currentFragment != null) {
                 fragmentTransaction = fragmentTransaction.hide(currentFragment);
-                previousFragment = currentFragment;
+                if (currentFragment == homeFragment || currentFragment == libraryFragment || currentFragment == profileFragment)
+                    previousFragment = currentFragment;
             }
             if ((fragmentFlag & index) != 0)
                 fragmentTransaction = fragmentTransaction.show(fragment);
@@ -108,5 +111,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void switchToPlay() {
         switchFragment(playFragment, FRAGMENT_PLAY);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (currentFragment == albumFragment || currentFragment == playFragment) {
+            fragmentManager.beginTransaction().hide(currentFragment).show(previousFragment).commit();
+            currentFragment = previousFragment;
+        } else
+            moveTaskToBack(true);
     }
 }

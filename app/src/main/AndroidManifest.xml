@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
-        <activity android:name=".view.LoginActivity">
+        <activity
+            android:name=".view.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +24,9 @@
             </intent-filter>
         </activity>
         <service android:name=".viewmodel.MainService" />
-        <activity android:name=".view.MainActivity" />
+        <activity
+            android:name=".view.MainActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

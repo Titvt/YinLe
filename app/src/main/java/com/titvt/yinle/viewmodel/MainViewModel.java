@@ -43,6 +43,7 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
     private long recentViewedAlbum;
     private long previousAlbum;
     private MutableLiveData<Boolean> monitor;
+    private boolean isSongExist;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
@@ -107,20 +108,23 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
     }
 
     public void playSong(long id) {
+        isSongExist = true;
         if (currentPlaying.getValue() == null || currentPlaying.getValue().getSongInfo().getId() != id)
             mainRepository.playSong(id);
     }
 
     public void playAlbumSong(long id) {
-        if (recentViewedAlbum == previousAlbum) {
+        isSongExist = true;
+        if (recentViewedAlbum == previousAlbum)
             playSong(id);
-        } else {
+        else {
             mainRepository.updateCurrentAlbumAndPlay(recentViewedAlbum, id);
             previousAlbum = recentViewedAlbum;
         }
     }
 
     public void playAlbum() {
+        isSongExist = true;
         if (currentAlbum.getValue() != null && isShaffle.getValue() != null && currentPlaying.getValue() != null && currentAlbum.getValue().getSongInfos().size() > 0) {
             if (isShaffle.getValue()) {
                 int index;
@@ -145,6 +149,7 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
     }
 
     public void firstPlayAlbum(long id) {
+        isSongExist = true;
         if (currentAlbum.getValue() == null || currentAlbum.getValue().getAlbumInfo().getId() != id)
             mainRepository.updateCurrentAlbum(id);
     }
@@ -265,7 +270,8 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
     }
 
     public void enterSong() {
-        pageStatus.postValue(2);
+        if (isSongExist)
+            pageStatus.postValue(2);
     }
 
     public void switchStatus() {

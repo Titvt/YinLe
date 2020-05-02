@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.titvt.yinle.R;
 import com.titvt.yinle.bean.AlbumInfo;
+import com.titvt.yinle.bean.SongInfo;
 import com.titvt.yinle.databinding.FragmentHomeBinding;
 import com.titvt.yinle.viewmodel.MainViewModel;
 
@@ -51,6 +52,7 @@ public class HomeFragment extends Fragment {
             }
         }, getActivity(), getLayoutInflater(), mainViewModel);
         fragmentHomeBinding.recyclerView.setAdapter(homeRecyclerViewAdapter);
+        fragmentHomeBinding.setSongInfo(new SongInfo(0, "音乐（lè），享受白嫖的快感", 0, 0, "", "我再强调一次，第二个字读快乐的乐！"));
         mainViewModel.getAlbumTops().observe(getActivity(), homeRecyclerViewAdapter::submitList);
         mainViewModel.getCurrentPlaying().observe(getActivity(), songDetail -> fragmentHomeBinding.setSongInfo(songDetail.getSongInfo()));
         mainViewModel.getIsPlaying().observe(getActivity(), isPlaying -> fragmentHomeBinding.play.setImageResource(!isPlaying ? R.mipmap.play_blue : R.mipmap.pause));

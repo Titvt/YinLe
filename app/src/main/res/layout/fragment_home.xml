@@ -128,8 +128,8 @@
                 android:onClick="@{()->viewModel.switchStatus()}">
 
                 <ImageView
-                    android:layout_width="20dp"
                     android:id="@+id/play"
+                    android:layout_width="20dp"
                     android:layout_height="22dp"
                     android:src="@mipmap/play_blue" />
 
@@ -166,7 +166,8 @@
             <LinearLayout
                 android:layout_width="64dp"
                 android:layout_height="match_parent"
-                android:gravity="center">
+                android:gravity="center"
+                android:onClick="@{()->viewModel.enterSong()}">
 
                 <ImageView
                     android:layout_width="23dp"

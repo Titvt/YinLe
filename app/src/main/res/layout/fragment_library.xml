@@ -103,7 +103,8 @@
             <LinearLayout
                 android:layout_width="64dp"
                 android:layout_height="match_parent"
-                android:gravity="center">
+                android:gravity="center"
+                android:onClick="@{()->viewModel.enterSong()}">
 
                 <ImageView
                     android:layout_width="23dp"
