@@ -1,4 +1,4 @@
-package com.titvt.yinle.view;
+package com.titvt.yinle.main;
 
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -12,9 +12,18 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.titvt.yinle.R;
 import com.titvt.yinle.databinding.ActivityMainBinding;
-import com.titvt.yinle.viewmodel.MainViewModel;
+import com.titvt.yinle.fragment.AlbumFragment;
+import com.titvt.yinle.fragment.HomeFragment;
+import com.titvt.yinle.fragment.LibraryFragment;
+import com.titvt.yinle.fragment.PlayFragment;
+import com.titvt.yinle.fragment.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int FRAGMENT_HOME = 1;
+    private static final int FRAGMENT_LIBRARY = 1 << 1;
+    private static final int FRAGMENT_PROFILE = 1 << 2;
+    private static final int FRAGMENT_ALBUM = 1 << 3;
+    private static final int FRAGMENT_PLAY = 1 << 4;
     private ActivityMainBinding activityMainBinding;
     private FragmentManager fragmentManager;
     private int fragmentFlag;
@@ -25,12 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private ProfileFragment profileFragment;
     private AlbumFragment albumFragment;
     private PlayFragment playFragment;
-
-    private static final int FRAGMENT_HOME = 1;
-    private static final int FRAGMENT_LIBRARY = 1 << 1;
-    private static final int FRAGMENT_PROFILE = 1 << 2;
-    private static final int FRAGMENT_ALBUM = 1 << 3;
-    private static final int FRAGMENT_PLAY = 1 << 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
         if (currentFragment != fragment) {
             if (currentFragment != null) {
                 fragmentTransaction = fragmentTransaction.hide(currentFragment);
-                if (currentFragment == homeFragment || currentFragment == libraryFragment || currentFragment == profileFragment)
+                if (currentFragment == homeFragment || currentFragment == libraryFragment
+                        || currentFragment == profileFragment)
                     previousFragment = currentFragment;
             }
             if ((fragmentFlag & index) != 0)

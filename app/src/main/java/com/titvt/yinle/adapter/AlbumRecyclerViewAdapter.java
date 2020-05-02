@@ -1,6 +1,5 @@
-package com.titvt.yinle.view;
+package com.titvt.yinle.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.titvt.yinle.R;
 import com.titvt.yinle.bean.SongInfo;
 import com.titvt.yinle.databinding.AlbumRecyclerViewItemBinding;
-import com.titvt.yinle.viewmodel.MainViewModel;
+import com.titvt.yinle.main.MainViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ public class AlbumRecyclerViewAdapter extends RecyclerView.Adapter<AlbumRecycler
     private List<SongInfo> songInfos;
     private long previousPlaying;
 
-    AlbumRecyclerViewAdapter(MainViewModel mainViewModel, LayoutInflater layoutInflater, LifecycleOwner lifecycleOwner) {
+    public AlbumRecyclerViewAdapter(MainViewModel mainViewModel, LayoutInflater layoutInflater, LifecycleOwner lifecycleOwner) {
         this.mainViewModel = mainViewModel;
         this.layoutInflater = layoutInflater;
         songInfos = new ArrayList<>();
@@ -33,7 +32,8 @@ public class AlbumRecyclerViewAdapter extends RecyclerView.Adapter<AlbumRecycler
         });
         mainViewModel.getCurrentPlaying().observe(lifecycleOwner, currentPlaying -> {
             for (int i = 0; i < songInfos.size(); i++)
-                if (songInfos.get(i).getId() == currentPlaying.getSongInfo().getId() || songInfos.get(i).getId() == previousPlaying)
+                if (songInfos.get(i).getId() == currentPlaying.getSongInfo().getId()
+                        || songInfos.get(i).getId() == previousPlaying)
                     notifyItemChanged(i);
             previousPlaying = currentPlaying.getSongInfo().getId();
         });
@@ -42,7 +42,8 @@ public class AlbumRecyclerViewAdapter extends RecyclerView.Adapter<AlbumRecycler
     @NonNull
     @Override
     public AlbumRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new AlbumRecyclerViewHolder(DataBindingUtil.inflate(layoutInflater, R.layout.album_recycler_view_item, parent, false));
+        return new AlbumRecyclerViewHolder(DataBindingUtil
+                .inflate(layoutInflater, R.layout.album_recycler_view_item, parent, false));
     }
 
     @Override

@@ -8,7 +8,7 @@ public class SongInfo {
     private String picUrl;
     private String ar;
 
-    public SongInfo(){
+    public SongInfo() {
 
     }
 

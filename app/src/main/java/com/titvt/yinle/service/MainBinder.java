@@ -1,8 +1,10 @@
-package com.titvt.yinle.viewmodel;
+package com.titvt.yinle.service;
 
 import android.os.Binder;
 
-class MainBinder extends Binder {
+import com.titvt.yinle.main.MainViewModel;
+
+public class MainBinder extends Binder {
     private IMainService mainService;
     private MainViewModel mainViewModel;
 
@@ -10,7 +12,7 @@ class MainBinder extends Binder {
         this.mainService = mainService;
     }
 
-    IMainService getMainService() {
+    public IMainService getMainService() {
         return mainService;
     }
 
@@ -18,7 +20,7 @@ class MainBinder extends Binder {
         return mainViewModel;
     }
 
-    void setMainViewModel(MainViewModel mainViewModel) {
+    public void setMainViewModel(MainViewModel mainViewModel) {
         this.mainViewModel = mainViewModel;
     }
 }

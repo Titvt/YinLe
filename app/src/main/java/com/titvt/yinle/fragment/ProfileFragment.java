@@ -1,4 +1,4 @@
-package com.titvt.yinle.view;
+package com.titvt.yinle.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,8 +13,8 @@ import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.titvt.yinle.R;
 import com.titvt.yinle.databinding.FragmentProfileBinding;
+import com.titvt.yinle.main.MainViewModel;
 import com.titvt.yinle.util.edilg.Edilg;
-import com.titvt.yinle.viewmodel.MainViewModel;
 
 public class ProfileFragment extends Fragment {
 
@@ -24,7 +24,8 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FragmentProfileBinding fragmentProfileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
+        FragmentProfileBinding fragmentProfileBinding = DataBindingUtil
+                .inflate(inflater, R.layout.fragment_profile, container, false);
         ViewModelStoreOwner viewModelStoreOwner = getActivity();
         if (viewModelStoreOwner == null)
             viewModelStoreOwner = this;

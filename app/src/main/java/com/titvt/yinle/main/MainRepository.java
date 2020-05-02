@@ -1,4 +1,4 @@
-package com.titvt.yinle.repository;
+package com.titvt.yinle.main;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -10,11 +10,9 @@ import com.titvt.yinle.bean.AlbumInfo;
 import com.titvt.yinle.bean.SongDetail;
 import com.titvt.yinle.bean.SongInfo;
 import com.titvt.yinle.bean.UserInfo;
-import com.titvt.yinle.model.MainModel;
 import com.titvt.yinle.util.httpss.Httpss;
 import com.titvt.yinle.util.httpss.HttpssCallback;
 import com.titvt.yinle.util.jsoff.JSOFF;
-import com.titvt.yinle.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +27,8 @@ public class MainRepository {
     private MutableLiveData<List<AlbumInfo>> banners;
     private MutableLiveData<SongDetail> currentPlaying;
 
-    public MainRepository(Context context, MainViewModel mainViewModel) {
-        mainModel = new MainModel();
+    MainRepository(Context context, MainViewModel mainViewModel) {
+        mainModel = new MainModel(context);
         this.context = context;
         this.mainViewModel = mainViewModel;
         userInfo = new MutableLiveData<>();
@@ -74,11 +72,11 @@ public class MainRepository {
         }).request();
     }
 
-    public MutableLiveData<UserInfo> getUserInfo() {
+    MutableLiveData<UserInfo> getUserInfo() {
         return userInfo;
     }
 
-    public void updateAlbumDetail(long id) {
+    void updateAlbumDetail(long id) {
         albumDetail.postValue(new AlbumDetail(new AlbumInfo(), new ArrayList<>()));
         new Httpss("http://47.99.165.194/playlist/detail?id=" + id).setCallback(new HttpssCallback() {
             @Override
@@ -117,11 +115,11 @@ public class MainRepository {
         }).request();
     }
 
-    public MutableLiveData<AlbumDetail> getAlbumDetail() {
+    MutableLiveData<AlbumDetail> getAlbumDetail() {
         return albumDetail;
     }
 
-    public void updateCurrentAlbum(long id) {
+    void updateCurrentAlbum(long id) {
         new Httpss("http://47.99.165.194/playlist/detail?id=" + id).setCallback(new HttpssCallback() {
             @Override
             public void onHttpssOK(byte[] data) {
@@ -160,7 +158,7 @@ public class MainRepository {
         }).request();
     }
 
-    public void updateCurrentAlbumAndPlay(long id, long song) {
+    void updateCurrentAlbumAndPlay(long id, long song) {
         new Httpss("http://47.99.165.194/playlist/detail?id=" + id).setCallback(new HttpssCallback() {
             @Override
             public void onHttpssOK(byte[] data) {
@@ -199,7 +197,7 @@ public class MainRepository {
         }).request();
     }
 
-    public MutableLiveData<AlbumDetail> getCurrentAlbum() {
+    MutableLiveData<AlbumDetail> getCurrentAlbum() {
         return currentAlbum;
     }
 
@@ -234,11 +232,11 @@ public class MainRepository {
         }).request();
     }
 
-    public MutableLiveData<List<AlbumInfo>> getBanners() {
+    MutableLiveData<List<AlbumInfo>> getBanners() {
         return banners;
     }
 
-    public void updateAlbumBanner(long id) {
+    void updateAlbumBanner(long id) {
         albumDetail.postValue(new AlbumDetail(new AlbumInfo(), new ArrayList<>()));
         new Httpss("http://47.99.165.194/album?id=" + id).setCallback(new HttpssCallback() {
             @Override
@@ -249,7 +247,7 @@ public class MainRepository {
                 long id = album.getBigInteger("id").longValue();
                 String picUrl = album.getString("picUrl");
                 String name = album.getString("name");
-                String nickname = album.getJSOFF("artist").getString("nickname");
+                String nickname = album.getJSOFF("artist").getString("name");
                 long size = album.getBigInteger("size").longValue();
                 List<SongInfo> songInfos = new ArrayList<>();
                 ArrayList<JSOFF> songs = jsoff.getJSOFFArray("songs");
@@ -328,11 +326,11 @@ public class MainRepository {
         }).request();
     }
 
-    public MutableLiveData<SongDetail> getCurrentPlaying() {
+    MutableLiveData<SongDetail> getCurrentPlaying() {
         return currentPlaying;
     }
 
-    public void playSong(long id) {
+    void playSong(long id) {
         updateCurrentPlaying(id);
     }
 }

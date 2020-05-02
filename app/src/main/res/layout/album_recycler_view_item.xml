@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.titvt.yinle.viewmodel.MainViewModel" />
+            type="com.titvt.yinle.main.MainViewModel" />
 
         <variable
             name="songInfo"

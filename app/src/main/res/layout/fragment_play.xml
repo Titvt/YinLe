@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.titvt.yinle.viewmodel.MainViewModel" />
+            type="com.titvt.yinle.main.MainViewModel" />
 
         <variable
             name="songInfo"
@@ -20,7 +20,7 @@
         android:background="@color/colorPrimary"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        tools:context=".view.PlayFragment">
+        tools:context=".fragment.PlayFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,6 +37,7 @@
                 <ImageView
                     android:layout_width="9.5dp"
                     android:layout_height="16dp"
+                    android:contentDescription="@string/app_name"
                     android:src="@mipmap/arrow" />
 
             </LinearLayout>
@@ -59,6 +60,7 @@
                 <ImageView
                     android:layout_width="23dp"
                     android:layout_height="5dp"
+                    android:contentDescription="@string/app_name"
                     android:src="@mipmap/dots" />
 
             </LinearLayout>
@@ -80,7 +82,8 @@
             <ImageView
                 android:id="@+id/cover"
                 android:layout_width="328dp"
-                android:layout_height="328dp" />
+                android:layout_height="328dp"
+                android:contentDescription="@string/app_name" />
 
         </LinearLayout>
 
@@ -99,7 +102,8 @@
                 <ImageView
                     android:id="@+id/shaffle"
                     android:layout_width="23.5dp"
-                    android:layout_height="19dp" />
+                    android:layout_height="19dp"
+                    android:contentDescription="@string/app_name" />
 
             </LinearLayout>
 
@@ -113,6 +117,7 @@
                 <ImageView
                     android:layout_width="19dp"
                     android:layout_height="11dp"
+                    android:contentDescription="@string/app_name"
                     android:src="@mipmap/rewind_left" />
 
             </LinearLayout>
@@ -128,7 +133,8 @@
                 <ImageView
                     android:id="@+id/play"
                     android:layout_width="30.5dp"
-                    android:layout_height="33dp" />
+                    android:layout_height="33dp"
+                    android:contentDescription="@string/app_name" />
 
             </LinearLayout>
 
@@ -142,6 +148,7 @@
                 <ImageView
                     android:layout_width="19dp"
                     android:layout_height="11dp"
+                    android:contentDescription="@string/app_name"
                     android:src="@mipmap/rewind_right" />
 
             </LinearLayout>
@@ -155,7 +162,8 @@
                 <ImageView
                     android:id="@+id/repeat"
                     android:layout_width="23dp"
-                    android:layout_height="19.5dp" />
+                    android:layout_height="19.5dp"
+                    android:contentDescription="@string/app_name" />
 
             </LinearLayout>
 

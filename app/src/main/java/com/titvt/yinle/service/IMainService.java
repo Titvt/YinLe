@@ -1,4 +1,4 @@
-package com.titvt.yinle.viewmodel;
+package com.titvt.yinle.service;
 
 public interface IMainService {
     void play(String url);

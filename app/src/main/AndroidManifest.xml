@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         tools:targetApi="n">
         <activity
-            android:name=".view.LoginActivity"
+            android:name=".login.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,9 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".viewmodel.MainService" />
+        <service android:name=".service.MainService" />
         <activity
-            android:name=".view.MainActivity"
+            android:name=".main.MainActivity"
             android:screenOrientation="portrait" />
     </application>
 

@@ -7,7 +7,7 @@ public class AlbumInfo {
     private String nickname;
     private long trackCount;
 
-    public AlbumInfo(){
+    public AlbumInfo() {
 
     }
 

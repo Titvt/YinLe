@@ -1,4 +1,4 @@
-package com.titvt.yinle.view;
+package com.titvt.yinle.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,15 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.titvt.yinle.R;
 import com.titvt.yinle.bean.AlbumInfo;
 import com.titvt.yinle.databinding.LibraryRecyclerViewItemBinding;
+import com.titvt.yinle.main.MainViewModel;
 import com.titvt.yinle.util.edilg.Edilg;
-import com.titvt.yinle.viewmodel.MainViewModel;
 
-public class LibraryRecyclerViewAdapter extends PagedListAdapter<AlbumInfo, LibraryRecyclerViewAdapter.LibraryRecyclerViewHolder> {
+public class LibraryRecyclerViewAdapter extends
+        PagedListAdapter<AlbumInfo, LibraryRecyclerViewAdapter.LibraryRecyclerViewHolder> {
     private Context context;
     private LayoutInflater layoutInflater;
     private MainViewModel mainViewModel;
 
-    LibraryRecyclerViewAdapter(@NonNull DiffUtil.ItemCallback<AlbumInfo> diffCallback, Context context, LayoutInflater layoutInflater, MainViewModel mainViewModel) {
+    public LibraryRecyclerViewAdapter(@NonNull DiffUtil.ItemCallback<AlbumInfo> diffCallback,
+                                      Context context, LayoutInflater layoutInflater, MainViewModel mainViewModel) {
         super(diffCallback);
         this.context = context;
         this.layoutInflater = layoutInflater;
@@ -31,7 +33,8 @@ public class LibraryRecyclerViewAdapter extends PagedListAdapter<AlbumInfo, Libr
     @NonNull
     @Override
     public LibraryRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new LibraryRecyclerViewHolder(DataBindingUtil.inflate(layoutInflater, R.layout.library_recycler_view_item, parent, false));
+        return new LibraryRecyclerViewHolder(DataBindingUtil
+                .inflate(layoutInflater, R.layout.library_recycler_view_item, parent, false));
     }
 
     @Override
@@ -41,7 +44,8 @@ public class LibraryRecyclerViewAdapter extends PagedListAdapter<AlbumInfo, Libr
         holder.libraryRecyclerViewItemBinding.setAlbumInfo(albumInfo);
         if (albumInfo != null) {
             holder.libraryRecyclerViewItemBinding.cover.setTag(albumInfo.getCoverImgUrl());
-            Edilg.with(context).load(albumInfo.getCoverImgUrl()).cornerRadius(30).into(holder.libraryRecyclerViewItemBinding.cover);
+            Edilg.with(context).load(albumInfo.getCoverImgUrl())
+                    .cornerRadius(30).into(holder.libraryRecyclerViewItemBinding.cover);
         }
     }
 

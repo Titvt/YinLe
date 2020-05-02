@@ -1,4 +1,4 @@
-package com.titvt.yinle.view;
+package com.titvt.yinle.login;
 
 import android.os.Bundle;
 
@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.titvt.yinle.R;
 import com.titvt.yinle.databinding.ActivityLoginBinding;
-import com.titvt.yinle.viewmodel.LoginViewModel;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -17,5 +16,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityLoginBinding activityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         activityLoginBinding.setViewModel(new ViewModelProvider(this).get(LoginViewModel.class));
+        activityLoginBinding.setUid("318082831");
     }
 }

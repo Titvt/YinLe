@@ -1,4 +1,4 @@
-package com.titvt.yinle.view;
+package com.titvt.yinle.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,8 +14,8 @@ import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.titvt.yinle.R;
 import com.titvt.yinle.databinding.FragmentPlayBinding;
+import com.titvt.yinle.main.MainViewModel;
 import com.titvt.yinle.util.edilg.Edilg;
-import com.titvt.yinle.viewmodel.MainViewModel;
 
 public class PlayFragment extends Fragment {
 
@@ -25,13 +25,15 @@ public class PlayFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FragmentPlayBinding fragmentPlayBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_play, container, false);
+        FragmentPlayBinding fragmentPlayBinding = DataBindingUtil
+                .inflate(inflater, R.layout.fragment_play, container, false);
         ViewModelStoreOwner viewModelStoreOwner = getActivity();
         if (viewModelStoreOwner == null)
             viewModelStoreOwner = this;
         MainViewModel mainViewModel = new ViewModelProvider(viewModelStoreOwner).get(MainViewModel.class);
         fragmentPlayBinding.setViewModel(mainViewModel);
-        mainViewModel.getIsPlaying().observe(getActivity(), isPlaying -> fragmentPlayBinding.play.setImageResource(!isPlaying ? R.mipmap.play_blue : R.mipmap.pause));
+        mainViewModel.getIsPlaying().observe(getActivity(), isPlaying ->
+                fragmentPlayBinding.play.setImageResource(!isPlaying ? R.mipmap.play_blue : R.mipmap.pause));
         mainViewModel.getIsShaffle().observe(getActivity(), isShaffle -> {
             fragmentPlayBinding.repeat.setImageResource(isShaffle ? R.mipmap.repeat : R.mipmap.repeat_blue);
             fragmentPlayBinding.shaffle.setImageResource(isShaffle ? R.mipmap.shaffle_blue : R.mipmap.shaffle);
@@ -46,7 +48,8 @@ public class PlayFragment extends Fragment {
             fragmentPlayBinding.seekBar.setMax((int) songDetail.getSongInfo().getDt());
             fragmentPlayBinding.seekBar.setProgress(0);
             fragmentPlayBinding.cover.setTag(songDetail.getSongInfo().getPicUrl());
-            Edilg.with(getActivity()).load(songDetail.getSongInfo().getPicUrl()).cornerRadius(60).into(fragmentPlayBinding.cover);
+            Edilg.with(getActivity()).load(songDetail.getSongInfo().getPicUrl())
+                    .cornerRadius(60).into(fragmentPlayBinding.cover);
         });
         fragmentPlayBinding.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

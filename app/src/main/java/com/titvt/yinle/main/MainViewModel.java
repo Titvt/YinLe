@@ -1,4 +1,4 @@
-package com.titvt.yinle.viewmodel;
+package com.titvt.yinle.main;
 
 import android.app.Application;
 import android.content.ComponentName;
@@ -20,9 +20,11 @@ import com.titvt.yinle.bean.AlbumInfo;
 import com.titvt.yinle.bean.SongDetail;
 import com.titvt.yinle.bean.SongInfo;
 import com.titvt.yinle.bean.UserInfo;
-import com.titvt.yinle.model.AlbumInfoDataSourceFactory;
-import com.titvt.yinle.model.AlbumTopDataSourceFactory;
-import com.titvt.yinle.repository.MainRepository;
+import com.titvt.yinle.datasource.AlbumInfoDataSourceFactory;
+import com.titvt.yinle.datasource.AlbumTopDataSourceFactory;
+import com.titvt.yinle.service.IMainService;
+import com.titvt.yinle.service.MainBinder;
+import com.titvt.yinle.service.MainService;
 
 import java.util.List;
 import java.util.Random;
@@ -51,27 +53,31 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
         application.bindService(new Intent(application, MainService.class), this, Context.BIND_AUTO_CREATE);
         pageStatus = new MutableLiveData<>();
         userInfo = mainRepository.getUserInfo();
-        albumInfos = new LivePagedListBuilder<>(new AlbumInfoDataSourceFactory(mainRepository.getUid()), new PagedList.Config.Builder()
+        albumInfos = new LivePagedListBuilder<>(new AlbumInfoDataSourceFactory(mainRepository.getUid()), new PagedList.Config
+                .Builder()
                 .setPageSize(20)
                 .setPrefetchDistance(10)
                 .setEnablePlaceholders(false)
                 .setInitialLoadSizeHint(40)
                 .setMaxSize(Integer.MAX_VALUE)
-                .build()).build();
+                .build())
+                .build();
         albumDetail = mainRepository.getAlbumDetail();
         currentPlaying = mainRepository.getCurrentPlaying();
         currentAlbum = mainRepository.getCurrentAlbum();
         isShaffle = new MutableLiveData<>(false);
         banners = mainRepository.getBanners();
-        albumTops = new LivePagedListBuilder<>(new AlbumTopDataSourceFactory(), new PagedList.Config.Builder()
+        albumTops = new LivePagedListBuilder<>(new AlbumTopDataSourceFactory(), new PagedList.Config
+                .Builder()
                 .setPageSize(20)
                 .setPrefetchDistance(10)
                 .setEnablePlaceholders(false)
                 .setInitialLoadSizeHint(40)
                 .setMaxSize(Integer.MAX_VALUE)
-                .build()).build();
+                .build())
+                .build();
         isPlaying = new MutableLiveData<>(false);
-        monitor = new MutableLiveData<Boolean>(false);
+        monitor = new MutableLiveData<>(false);
         new Thread() {
             @Override
             public void run() {
@@ -87,7 +93,7 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
         }.start();
     }
 
-    public MutableLiveData<Integer> getPageStatus() {
+    MutableLiveData<Integer> getPageStatus() {
         return pageStatus;
     }
 
@@ -107,7 +113,7 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
         pageStatus.postValue(-1);
     }
 
-    public void playSong(long id) {
+    void playSong(long id) {
         isSongExist = true;
         if (currentPlaying.getValue() == null || currentPlaying.getValue().getSongInfo().getId() != id)
             mainRepository.playSong(id);
@@ -123,9 +129,10 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
         }
     }
 
-    public void playAlbum() {
+    void playAlbum() {
         isSongExist = true;
-        if (currentAlbum.getValue() != null && isShaffle.getValue() != null && currentPlaying.getValue() != null && currentAlbum.getValue().getSongInfos().size() > 0) {
+        if (currentAlbum.getValue() != null && isShaffle.getValue() != null
+                && currentPlaying.getValue() != null && currentAlbum.getValue().getSongInfos().size() > 0) {
             if (isShaffle.getValue()) {
                 int index;
                 do
@@ -139,9 +146,8 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
                         playSong(songInfo.getId());
                         return;
                     }
-                    if (songInfo.getId() == currentPlaying.getValue().getSongInfo().getId()) {
+                    if (songInfo.getId() == currentPlaying.getValue().getSongInfo().getId())
                         flag = true;
-                    }
                 }
                 playSong(currentAlbum.getValue().getSongInfos().get(0).getId());
             }
@@ -205,8 +211,9 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
-        mainService = ((MainBinder) service).getMainService();
-        ((MainBinder) service).setMainViewModel(this);
+        MainBinder mainBinder = (MainBinder) service;
+        mainService = mainBinder.getMainService();
+        mainBinder.setMainViewModel(this);
     }
 
     @Override
@@ -214,7 +221,7 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
 
     }
 
-    public void playSongCallback() {
+    void playSongCallback() {
         if (mainService != null && currentPlaying.getValue() != null) {
             mainService.play(currentPlaying.getValue().getUrl());
             isPlaying.postValue(true);
@@ -239,7 +246,7 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
             return;
         if (isShaffle.getValue() != null && isShaffle.getValue()) {
             playAlbum();
-        } else {
+        } else if (currentPlaying.getValue() != null) {
             boolean flag = false;
             for (SongInfo songInfo : currentAlbum.getValue().getSongInfos()) {
                 if (flag) {
@@ -256,8 +263,9 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
     public void playPrevious() {
         if (isShaffle.getValue() != null && isShaffle.getValue()) {
             playAlbum();
-        } else {
-            SongInfo previous = currentAlbum.getValue().getSongInfos().get(currentAlbum.getValue().getSongInfos().size() - 1);
+        } else if (currentAlbum.getValue() != null && currentPlaying.getValue() != null) {
+            SongInfo previous = currentAlbum.getValue().getSongInfos()
+                    .get(currentAlbum.getValue().getSongInfos().size() - 1);
             for (SongInfo songInfo : currentAlbum.getValue().getSongInfos()) {
                 if (songInfo.getId() != currentPlaying.getValue().getSongInfo().getId())
                     previous = songInfo;

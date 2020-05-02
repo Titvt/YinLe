@@ -1,4 +1,4 @@
-package com.titvt.yinle.view;
+package com.titvt.yinle.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.titvt.yinle.R;
 import com.titvt.yinle.bean.AlbumInfo;
 import com.titvt.yinle.databinding.HomeRecyclerViewBannerBinding;
+import com.titvt.yinle.main.MainViewModel;
 import com.titvt.yinle.util.edilg.Edilg;
-import com.titvt.yinle.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,8 @@ public class BannerRecyclerViewAdapter extends RecyclerView.Adapter<BannerRecycl
     private LayoutInflater layoutInflater;
     private List<AlbumInfo> albumInfos;
 
-    BannerRecyclerViewAdapter(Context context, MainViewModel mainViewModel, LayoutInflater layoutInflater, LifecycleOwner lifecycleOwner) {
+    public BannerRecyclerViewAdapter(Context context, MainViewModel mainViewModel,
+                                     LayoutInflater layoutInflater, LifecycleOwner lifecycleOwner) {
         this.context = context;
         this.mainViewModel = mainViewModel;
         this.layoutInflater = layoutInflater;
@@ -38,7 +39,8 @@ public class BannerRecyclerViewAdapter extends RecyclerView.Adapter<BannerRecycl
     @NonNull
     @Override
     public BannerRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new BannerRecyclerViewHolder(DataBindingUtil.inflate(layoutInflater, R.layout.home_recycler_view_banner, parent, false));
+        return new BannerRecyclerViewHolder(DataBindingUtil
+                .inflate(layoutInflater, R.layout.home_recycler_view_banner, parent, false));
     }
 
     @Override
@@ -50,7 +52,8 @@ public class BannerRecyclerViewAdapter extends RecyclerView.Adapter<BannerRecycl
     public void onBindViewHolder(@NonNull BannerRecyclerViewHolder holder, int position) {
         holder.homeRecyclerViewBannerBinding.setViewModel(mainViewModel);
         holder.homeRecyclerViewBannerBinding.setAlbumInfo(albumInfos.get(position));
-        Edilg.with(context).load(albumInfos.get(position).getCoverImgUrl()).cornerRadius(60).into(holder.homeRecyclerViewBannerBinding.cover);
+        Edilg.with(context).load(albumInfos.get(position).getCoverImgUrl())
+                .cornerRadius(60).into(holder.homeRecyclerViewBannerBinding.cover);
     }
 
     static class BannerRecyclerViewHolder extends RecyclerView.ViewHolder {

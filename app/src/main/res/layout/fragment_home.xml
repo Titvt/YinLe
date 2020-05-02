@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.titvt.yinle.viewmodel.MainViewModel" />
+            type="com.titvt.yinle.main.MainViewModel" />
 
         <variable
             name="songInfo"
@@ -13,14 +13,13 @@
 
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        tools:context=".view.HomeFragment">
+        tools:context=".fragment.HomeFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,6 +45,7 @@
                 <ImageView
                     android:layout_width="23dp"
                     android:layout_height="23dp"
+                    android:contentDescription="@string/app_name"
                     android:src="@mipmap/search" />
 
             </LinearLayout>
@@ -119,6 +119,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="64dp"
+            android:baselineAligned="false"
             android:gravity="center_vertical">
 
             <LinearLayout
@@ -131,6 +132,7 @@
                     android:id="@+id/play"
                     android:layout_width="20dp"
                     android:layout_height="22dp"
+                    android:contentDescription="@string/app_name"
                     android:src="@mipmap/play_blue" />
 
             </LinearLayout>
@@ -172,6 +174,7 @@
                 <ImageView
                     android:layout_width="23dp"
                     android:layout_height="5dp"
+                    android:contentDescription="@string/app_name"
                     android:src="@mipmap/dots" />
 
             </LinearLayout>

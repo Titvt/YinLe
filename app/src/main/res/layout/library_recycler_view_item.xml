@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.titvt.yinle.viewmodel.MainViewModel" />
+            type="com.titvt.yinle.main.MainViewModel" />
 
         <variable
             name="albumInfo"
@@ -13,7 +13,7 @@
 
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="142dp"
         android:background="@color/colorPrimary"
@@ -21,7 +21,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="141.5dp">
+            android:layout_height="141.5dp"
+            android:baselineAligned="false">
 
             <FrameLayout
                 android:layout_width="95dp"
@@ -32,12 +33,14 @@
                 <ImageView
                     android:id="@+id/cover"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/app_name" />
 
                 <ImageView
                     android:layout_width="23dp"
                     android:layout_height="23dp"
                     android:layout_margin="36dp"
+                    android:contentDescription="@string/app_name"
                     android:src="@mipmap/play" />
 
             </FrameLayout>
@@ -75,6 +78,7 @@
                     <ImageView
                         android:layout_width="23dp"
                         android:layout_height="21.5dp"
+                        android:contentDescription="@string/app_name"
                         android:src="@mipmap/playlist_grey" />
 
                     <TextView
@@ -91,6 +95,7 @@
                         android:layout_height="5dp"
                         android:layout_marginStart="15.5dp"
                         android:layout_marginEnd="23.5dp"
+                        android:contentDescription="@string/app_name"
                         android:src="@mipmap/dots" />
 
                 </LinearLayout>

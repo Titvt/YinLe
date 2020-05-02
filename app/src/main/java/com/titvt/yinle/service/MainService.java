@@ -1,4 +1,4 @@
-package com.titvt.yinle.viewmodel;
+package com.titvt.yinle.service;
 
 import android.app.Service;
 import android.content.Intent;
@@ -7,9 +7,8 @@ import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
-import java.io.IOException;
-
-public class MainService extends Service implements IMainService, MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
+public class MainService extends Service implements
+        IMainService, MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
     private MainBinder mainBinder;
     private MediaPlayer mediaPlayer;
     private String url;
@@ -36,18 +35,17 @@ public class MainService extends Service implements IMainService, MediaPlayer.On
 
     @Override
     public void play(String url) {
-        if (url.equals(this.url)) {
+        if (url.equals(this.url))
             mediaPlayer.start();
-        } else {
+        else {
             this.url = url;
+            mediaPlayer.stop();
+            mediaPlayer.reset();
             try {
-                mediaPlayer.stop();
-                mediaPlayer.reset();
                 mediaPlayer.setDataSource(url);
-                mediaPlayer.prepareAsync();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }
+            mediaPlayer.prepareAsync();
         }
     }
 
