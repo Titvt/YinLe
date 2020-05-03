@@ -16,8 +16,7 @@ import com.titvt.yinle.databinding.LibraryRecyclerViewItemBinding;
 import com.titvt.yinle.main.MainViewModel;
 import com.titvt.yinle.util.edilg.Edilg;
 
-public class LibraryRecyclerViewAdapter extends
-        PagedListAdapter<AlbumInfo, LibraryRecyclerViewAdapter.LibraryRecyclerViewHolder> {
+public class LibraryRecyclerViewAdapter extends PagedListAdapter<AlbumInfo, LibraryRecyclerViewAdapter.LibraryRecyclerViewHolder> {
     private Context context;
     private LayoutInflater layoutInflater;
     private MainViewModel mainViewModel;

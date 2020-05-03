@@ -16,4 +16,6 @@
     <string name="following">Following</string>
     <string name="play_list">PlayList</string>
     <string name="songs">Songs</string>
+    <string name="search">Search</string>
+    <string name="search_cn">搜索</string>
 </resources>

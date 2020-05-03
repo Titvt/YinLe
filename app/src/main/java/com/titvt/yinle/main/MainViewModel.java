@@ -48,6 +48,7 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
     private MutableLiveData<Boolean> monitor;
     private boolean isSongExist;
     private MutableLiveData<Lyric> currentLyric;
+    private MutableLiveData<List<SongInfo>> searchSongs;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
@@ -81,6 +82,7 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
         isPlaying = new MutableLiveData<>(false);
         monitor = new MutableLiveData<>(false);
         currentLyric = mainRepository.getCurrentLyric();
+        searchSongs = mainRepository.getSearchSongs();
         new Thread() {
             @Override
             public void run() {
@@ -342,5 +344,17 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
             return new String[]{lyrics.get(index - 1), ""};
         else
             return new String[]{lyrics.get(index - 1), lyrics.get(index)};
+    }
+
+    public void enterSearch() {
+        pageStatus.postValue(3);
+    }
+
+    public void search(String keywords) {
+        mainRepository.updateSearchSongs(keywords);
+    }
+
+    public MutableLiveData<List<SongInfo>> getSearchSongs() {
+        return searchSongs;
     }
 }

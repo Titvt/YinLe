@@ -28,6 +28,7 @@ public class MainRepository {
     private MutableLiveData<List<AlbumInfo>> banners;
     private MutableLiveData<SongDetail> currentPlaying;
     private MutableLiveData<Lyric> currentLyric;
+    private MutableLiveData<List<SongInfo>> searchSongs;
 
     MainRepository(Context context, MainViewModel mainViewModel) {
         mainModel = new MainModel(context);
@@ -39,6 +40,7 @@ public class MainRepository {
         banners = new MutableLiveData<>();
         currentPlaying = new MutableLiveData<>();
         currentLyric = new MutableLiveData<>();
+        searchSongs = new MutableLiveData<>(new ArrayList<>());
         updateUserInfo();
         updateBanners();
     }
@@ -321,7 +323,8 @@ public class MainRepository {
                                             String[] parts = item.substring(1).split("]");
                                             if (parts.length == 2) {
                                                 String[] parts2 = parts[0].split(":");
-                                                times.add(Integer.parseInt(parts2[0]) * 60000 + (int) (Double.parseDouble(parts2[1]) * 1000));
+                                                times.add(Integer.parseInt(parts2[0]) * 60000 +
+                                                        (int) (Double.parseDouble(parts2[1]) * 1000));
                                                 lyrics.add(parts[1]);
                                             }
                                         }
@@ -376,5 +379,38 @@ public class MainRepository {
 
     MutableLiveData<Lyric> getCurrentLyric() {
         return currentLyric;
+    }
+
+    void updateSearchSongs(String keywords) {
+        new Httpss("http://47.99.165.194/search?keywords=" + keywords + "&limit=100").setCallback(new HttpssCallback() {
+            @Override
+            public void onHttpssOK(byte[] data) {
+                List<SongInfo> songInfoList = new ArrayList<>();
+                String json = new String(data);
+                JSOFF jsoff = new JSOFF(json);
+                ArrayList<JSOFF> songs = jsoff.getJSOFF("result").getJSOFFArray("songs");
+                for (JSOFF item : songs) {
+                    long id = item.getBigInteger("id").longValue();
+                    String name = item.getString("name");
+                    String nickname = item.getJSOFFArray("artists").get(0).getString("name");
+                    songInfoList.add(new SongInfo(id, name, 0, 0, "", nickname));
+                }
+                searchSongs.setValue(songInfoList);
+            }
+
+            @Override
+            public void onHttpssFail(int responseCode) {
+
+            }
+
+            @Override
+            public void onHttpssError() {
+
+            }
+        }).request();
+    }
+
+    MutableLiveData<List<SongInfo>> getSearchSongs() {
+        return searchSongs;
     }
 }

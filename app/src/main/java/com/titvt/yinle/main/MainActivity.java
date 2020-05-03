@@ -17,6 +17,7 @@ import com.titvt.yinle.fragment.HomeFragment;
 import com.titvt.yinle.fragment.LibraryFragment;
 import com.titvt.yinle.fragment.PlayFragment;
 import com.titvt.yinle.fragment.ProfileFragment;
+import com.titvt.yinle.fragment.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
     private static final int FRAGMENT_HOME = 1;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int FRAGMENT_PROFILE = 1 << 2;
     private static final int FRAGMENT_ALBUM = 1 << 3;
     private static final int FRAGMENT_PLAY = 1 << 4;
+    private static final int FRAGMENT_SEARCH = 1 << 5;
     private ActivityMainBinding activityMainBinding;
     private FragmentManager fragmentManager;
     private int fragmentFlag;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private ProfileFragment profileFragment;
     private AlbumFragment albumFragment;
     private PlayFragment playFragment;
+    private SearchFragment searchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +46,21 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding.setViewModel(mainViewModel);
         mainViewModel.getPageStatus().observe(this, pageStatus -> {
             switch (pageStatus) {
-                case -1:
-                    if (currentFragment == albumFragment || currentFragment == playFragment) {
-                        fragmentManager.beginTransaction().hide(currentFragment).show(previousFragment).commit();
-                        currentFragment = previousFragment;
-                    }
-                    break;
                 case 1:
                     switchToAlbum();
                     break;
                 case 2:
                     switchToPlay();
+                    break;
+                case 3:
+                    switchToSearch();
+                    break;
+                case -1:
+                    if (currentFragment == albumFragment || currentFragment == playFragment
+                            || currentFragment == searchFragment) {
+                        fragmentManager.beginTransaction().hide(currentFragment).show(previousFragment).commit();
+                        currentFragment = previousFragment;
+                    }
             }
         });
         fragmentManager = getSupportFragmentManager();
@@ -62,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         profileFragment = new ProfileFragment();
         albumFragment = new AlbumFragment();
         playFragment = new PlayFragment();
+        searchFragment = new SearchFragment();
         activityMainBinding.home.setOnClickListener(v -> switchToHome());
         activityMainBinding.library.setOnClickListener(v -> switchToLibrary());
         activityMainBinding.profile.setOnClickListener(v -> switchToProfile());
@@ -117,9 +125,13 @@ public class MainActivity extends AppCompatActivity {
         switchFragment(playFragment, FRAGMENT_PLAY);
     }
 
+    public void switchToSearch() {
+        switchFragment(searchFragment, FRAGMENT_SEARCH);
+    }
+
     @Override
     public void onBackPressed() {
-        if (currentFragment == albumFragment || currentFragment == playFragment) {
+        if (currentFragment == albumFragment || currentFragment == playFragment || currentFragment == searchFragment) {
             fragmentManager.beginTransaction().hide(currentFragment).show(previousFragment).commit();
             currentFragment = previousFragment;
         } else
