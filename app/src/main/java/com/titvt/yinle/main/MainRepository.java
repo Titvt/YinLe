@@ -82,7 +82,7 @@ public class MainRepository {
     }
 
     void updateAlbumDetail(long id) {
-        albumDetail.postValue(new AlbumDetail(new AlbumInfo(), new ArrayList<>()));
+        albumDetail.setValue(new AlbumDetail(new AlbumInfo(), new ArrayList<>()));
         new Httpss("http://47.99.165.194/playlist/detail?id=" + id).setCallback(new HttpssCallback() {
             @Override
             public void onHttpssOK(byte[] data) {
@@ -242,7 +242,7 @@ public class MainRepository {
     }
 
     void updateAlbumBanner(long id) {
-        albumDetail.postValue(new AlbumDetail(new AlbumInfo(), new ArrayList<>()));
+        albumDetail.setValue(new AlbumDetail(new AlbumInfo(), new ArrayList<>()));
         new Httpss("http://47.99.165.194/album?id=" + id).setCallback(new HttpssCallback() {
             @Override
             public void onHttpssOK(byte[] data) {
