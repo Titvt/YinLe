@@ -1,5 +1,6 @@
 package com.titvt.yinle.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.titvt.yinle.R;
 import com.titvt.yinle.databinding.ActivityLoginBinding;
+import com.titvt.yinle.main.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
     @Override
@@ -18,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
         activityLoginBinding.setUid(loginViewModel.getUid());
         activityLoginBinding.login.setOnClickListener(v -> {
             loginViewModel.login();
-            finish();
+            startActivity(new Intent(this, MainActivity.class).putExtra("firstStart", false));
         });
     }
 

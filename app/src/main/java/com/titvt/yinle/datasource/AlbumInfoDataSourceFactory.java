@@ -6,9 +6,9 @@ import androidx.paging.DataSource;
 import com.titvt.yinle.bean.AlbumInfo;
 
 public class AlbumInfoDataSourceFactory extends DataSource.Factory<Integer, AlbumInfo> {
-    private long uid;
+    private int uid;
 
-    public AlbumInfoDataSourceFactory(long uid) {
+    public AlbumInfoDataSourceFactory(int uid) {
         this.uid = uid;
     }
 

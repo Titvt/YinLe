@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int FRAGMENT_ALBUM = 1 << 3;
     private static final int FRAGMENT_PLAY = 1 << 4;
     private static final int FRAGMENT_SEARCH = 1 << 5;
+    private boolean firstStart = true;
     private ActivityMainBinding activityMainBinding;
     private FragmentManager fragmentManager;
     private int fragmentFlag;
@@ -43,7 +44,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startActivity(new Intent(this, LoginActivity.class));
+        if (firstStart) {
+            if (!getIntent().getBooleanExtra("firstStart", true))
+                firstStart = false;
+            if (firstStart) {
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+            }
+        }
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         activityMainBinding.setViewModel(mainViewModel);

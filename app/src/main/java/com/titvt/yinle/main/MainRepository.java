@@ -45,7 +45,7 @@ public class MainRepository {
         updateBanners();
     }
 
-    public long getUid() {
+    public int getUid() {
         return mainModel.getUid();
     }
 

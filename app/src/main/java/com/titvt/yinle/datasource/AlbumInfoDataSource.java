@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlbumInfoDataSource extends PositionalDataSource<AlbumInfo> {
-    private long uid;
+    private int uid;
 
-    AlbumInfoDataSource(long uid) {
+    AlbumInfoDataSource(int uid) {
         this.uid = uid;
     }
 
