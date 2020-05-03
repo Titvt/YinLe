@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.titvt.yinle.bean.AlbumDetail;
 import com.titvt.yinle.bean.AlbumInfo;
+import com.titvt.yinle.bean.Lyric;
 import com.titvt.yinle.bean.SongDetail;
 import com.titvt.yinle.bean.SongInfo;
 import com.titvt.yinle.bean.UserInfo;
@@ -26,6 +27,7 @@ public class MainRepository {
     private MutableLiveData<AlbumDetail> currentAlbum;
     private MutableLiveData<List<AlbumInfo>> banners;
     private MutableLiveData<SongDetail> currentPlaying;
+    private MutableLiveData<Lyric> currentLyric;
 
     MainRepository(Context context, MainViewModel mainViewModel) {
         mainModel = new MainModel(context);
@@ -36,6 +38,7 @@ public class MainRepository {
         currentAlbum = new MutableLiveData<>();
         banners = new MutableLiveData<>();
         currentPlaying = new MutableLiveData<>();
+        currentLyric = new MutableLiveData<>();
         updateUserInfo();
         updateBanners();
     }
@@ -289,7 +292,9 @@ public class MainRepository {
                 String picUrl = songs.getJSOFF("al").getString("picUrl");
                 String ar = songs.getJSOFFArray("ar").get(0).getString("name");
                 SongInfo songInfo = new SongInfo(id2, name, dt, fee, picUrl, ar);
-                if (fee != 1)
+                if (fee == 1)
+                    Toast.makeText(context, "此歌曲为付费歌曲，白嫖失败", Toast.LENGTH_SHORT).show();
+                else
                     new Httpss("http://47.99.165.194/song/url?id=" + id).setCallback(new HttpssCallback() {
                         @Override
                         public void onHttpssOK(byte[] data) {
@@ -297,7 +302,44 @@ public class MainRepository {
                             JSOFF jsoff = new JSOFF(json);
                             String url = jsoff.getJSOFFArray("data").get(0).getString("url");
                             currentPlaying.setValue(new SongDetail(songInfo, url));
-                            mainViewModel.playSongCallback();
+                            new Httpss("http://47.99.165.194/lyric?id=" + id).setCallback(new HttpssCallback() {
+                                @Override
+                                public void onHttpssOK(byte[] data) {
+                                    List<Integer> times = new ArrayList<>();
+                                    List<String> lyrics = new ArrayList<>();
+                                    String json = new String(data);
+                                    json = json.replaceAll("\\\\n", "\n");
+                                    JSOFF jsoff = new JSOFF(json);
+                                    if (jsoff.getBoolean("nolyric") != null && jsoff.getBoolean("nolyric")) {
+                                        times.add(0);
+                                        lyrics.add("此歌曲无歌词");
+                                    } else {
+                                        String lyric = jsoff.getJSOFF("lrc").getString("lyric");
+                                        lyric = lyric.substring(lyric.indexOf("[0"), lyric.length() - 1);
+                                        String[] items = lyric.split("\n");
+                                        for (String item : items) {
+                                            String[] parts = item.substring(1).split("]");
+                                            if (parts.length == 2) {
+                                                String[] parts2 = parts[0].split(":");
+                                                times.add(Integer.parseInt(parts2[0]) * 60000 + (int) (Double.parseDouble(parts2[1]) * 1000));
+                                                lyrics.add(parts[1]);
+                                            }
+                                        }
+                                    }
+                                    currentLyric.setValue(new Lyric(times, lyrics));
+                                    mainViewModel.playSongCallback();
+                                }
+
+                                @Override
+                                public void onHttpssFail(int responseCode) {
+
+                                }
+
+                                @Override
+                                public void onHttpssError() {
+
+                                }
+                            }).request();
                         }
 
                         @Override
@@ -310,8 +352,6 @@ public class MainRepository {
 
                         }
                     }).request();
-                else
-                    Toast.makeText(context, "此歌曲为付费歌曲，白嫖失败", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -332,5 +372,9 @@ public class MainRepository {
 
     void playSong(long id) {
         updateCurrentPlaying(id);
+    }
+
+    MutableLiveData<Lyric> getCurrentLyric() {
+        return currentLyric;
     }
 }

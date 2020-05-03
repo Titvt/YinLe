@@ -170,18 +170,20 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/lyric_current"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20.5dp"
-            android:text="lyric now"
+            android:maxLines="1"
             android:textColor="@color/blackText"
             android:textSize="30sp" />
 
         <TextView
+            android:id="@+id/lyric_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="lyric next"
+            android:maxLines="1"
             android:textColor="@color/greyText"
             android:textSize="18sp" />
 

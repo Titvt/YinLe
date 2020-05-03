@@ -17,6 +17,7 @@ import androidx.paging.PagedList;
 import com.titvt.yinle.R;
 import com.titvt.yinle.bean.AlbumDetail;
 import com.titvt.yinle.bean.AlbumInfo;
+import com.titvt.yinle.bean.Lyric;
 import com.titvt.yinle.bean.SongDetail;
 import com.titvt.yinle.bean.SongInfo;
 import com.titvt.yinle.bean.UserInfo;
@@ -46,6 +47,7 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
     private long previousAlbum;
     private MutableLiveData<Boolean> monitor;
     private boolean isSongExist;
+    private MutableLiveData<Lyric> currentLyric;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
@@ -78,6 +80,7 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
                 .build();
         isPlaying = new MutableLiveData<>(false);
         monitor = new MutableLiveData<>(false);
+        currentLyric = mainRepository.getCurrentLyric();
         new Thread() {
             @Override
             public void run() {
@@ -85,7 +88,7 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
                     if (monitor.getValue() != null)
                         monitor.postValue(!monitor.getValue());
                     try {
-                        sleep(1000);
+                        sleep(400);
                     } catch (Exception ignored) {
                     }
                 }
@@ -320,5 +323,24 @@ public class MainViewModel extends AndroidViewModel implements ServiceConnection
 
     public void setProgress(int progress) {
         mainService.setProgress(progress);
+    }
+
+    public String[] getLyrics() {
+        Lyric lyric = currentLyric.getValue();
+        if (lyric == null)
+            return new String[]{"", ""};
+        int currentTime = mainService.getCurrentTime();
+        List<Integer> times = lyric.getTimes();
+        List<String> lyrics = lyric.getLyrics();
+        int index;
+        for (index = 0; index < times.size(); index++)
+            if (times.get(index) > currentTime)
+                break;
+        if (index == 0) {
+            return new String[]{"", lyrics.get(index)};
+        } else if (index == times.size())
+            return new String[]{lyrics.get(index - 1), ""};
+        else
+            return new String[]{lyrics.get(index - 1), lyrics.get(index)};
     }
 }

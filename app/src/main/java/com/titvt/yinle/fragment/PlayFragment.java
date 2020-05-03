@@ -42,6 +42,9 @@ public class PlayFragment extends Fragment {
             fragmentPlayBinding.timeLeft.setText(mainViewModel.getCurrentTime());
             fragmentPlayBinding.timeRight.setText(mainViewModel.getRemainTime());
             fragmentPlayBinding.seekBar.setProgress(mainViewModel.getProgress());
+            String[] lyrics = mainViewModel.getLyrics();
+            fragmentPlayBinding.lyricCurrent.setText(lyrics[0]);
+            fragmentPlayBinding.lyricNext.setText(lyrics[1]);
         });
         mainViewModel.getCurrentPlaying().observe(getActivity(), songDetail -> {
             fragmentPlayBinding.setSongInfo(songDetail.getSongInfo());
