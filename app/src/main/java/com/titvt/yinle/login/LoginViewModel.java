@@ -1,27 +1,27 @@
 package com.titvt.yinle.login;
 
 import android.app.Application;
-import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-
-import com.titvt.yinle.main.MainActivity;
+import androidx.lifecycle.MutableLiveData;
 
 public class LoginViewModel extends AndroidViewModel {
     private LoginRepository loginRepository;
-    private Application application;
+    private MutableLiveData<String> uid;
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
         loginRepository = new LoginRepository(application);
-        this.application = application;
+        uid = new MutableLiveData<>("318082831");
     }
 
-    public void login(int uid) {
-        loginRepository.setUid(uid);
-        Intent intent = new Intent(application, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        application.startActivity(intent);
+    public MutableLiveData<String> getUid() {
+        return uid;
+    }
+
+    void login() {
+        if (uid.getValue() != null)
+            loginRepository.setUid(Integer.parseInt(uid.getValue()));
     }
 }

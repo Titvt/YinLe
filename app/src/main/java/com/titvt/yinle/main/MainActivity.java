@@ -1,5 +1,6 @@
 package com.titvt.yinle.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 
@@ -18,6 +19,7 @@ import com.titvt.yinle.fragment.LibraryFragment;
 import com.titvt.yinle.fragment.PlayFragment;
 import com.titvt.yinle.fragment.ProfileFragment;
 import com.titvt.yinle.fragment.SearchFragment;
+import com.titvt.yinle.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
     private static final int FRAGMENT_HOME = 1;
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        startActivity(new Intent(this, LoginActivity.class));
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         activityMainBinding.setViewModel(mainViewModel);
